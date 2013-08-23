@@ -5,6 +5,7 @@ var filenotfound = require('./controllers/404');
 
 var indexRegex = /\/post\/?$/;
 var createPostRegex = /\/post\/create\/?$/;
+var postRegex = /^\/post\/\w-?/;
 
 exports.get = function(request, response){
 	request.requrl = url.parse(request.url, true);
@@ -15,6 +16,8 @@ exports.get = function(request, response){
 		post.index(request, response);
 	} else if (createPostRegex.test(path)) {
 		post.create(request, response);
+	} else if (postRegex.test(path)) {
+		post.get(request, response, path);
 	} else {
 		filenotfound.get(request, response);
 	}

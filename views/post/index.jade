@@ -17,6 +17,8 @@ html(lang="en")
 		section
 			h2 Posts
 			ul#posts
+				each post in posts
+					li: a(href="/post/" + post.path)=post.title
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 		script.
 			$(document).ready(function(){
@@ -33,7 +35,7 @@ html(lang="en")
 							console.log('data', data);
 							var li = $('li');
 							li.innerText = data.title;
-							ul.append('<li><a href="/post/'+ data.id +'">' + data.title + '</a></li>');
+							ul.append('<li><a href="/post/'+ data.path +'">' + data.title + '</a></li>');
 						}
 					});
 				});
