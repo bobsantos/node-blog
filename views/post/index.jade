@@ -1,0 +1,40 @@
+!!! 5
+html(lang="en")
+	head
+		title nodejs | Blog
+	body
+		section
+			h2 Create a new post
+			form#create(method="post", action="/post/create")
+				p
+					label(for="title") Title 
+					input#title(type="text", name="title", size="30")
+				p
+					label(for="content") Content
+					br
+					textarea#content(name="content", rows="10", cols="50")
+				p: input(type="submit", value="Create")
+		section
+			h2 Posts
+			ul#posts
+		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+		script.
+			$(document).ready(function(){
+				var form = $('#create');
+				var ul = $('#posts');
+				form.submit(function(e){
+					e.preventDefault();
+
+					$.ajax({
+						type: form.attr('method'),
+						url: form.attr('action'),
+						data: form.serialize(),
+						success: function(data){
+							console.log('data', data);
+							var li = $('li');
+							li.innerText = data.title;
+							ul.append('<li><a href="/post/'+ data.id +'">' + data.title + '</a></li>');
+						}
+					});
+				});
+			});
